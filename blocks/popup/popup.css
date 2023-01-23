@@ -1,0 +1,16 @@
+.popup {
+  display: none;
+  position: fixed;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+}
+
+.popup::before {
+  position: fixed;
+  inset: 0;
+  content: '';
+  background-color: #000;
+  opacity: 0.5;
+
+}

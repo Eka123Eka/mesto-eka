@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html"; charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mecto Russia</title>
+    <link rel="stylesheet" href="./pages/index.css">
+  </head>
+  <body class="page">
+    <header class="header">
+      <img class="header__logo" src="./images/logo.svg" alt="Логотип сайта Mesto Russia.">
+    </header>
+    <main>
+      <section class="profile" aria-label="Редактирование профиля">
+        <div class="profile__container">
+          <img class="profile__avatar" src="./images/Kusto.jpg" alt="Аватарка пользователя." >
+          <div class="profile__info">
+            <div class="profile__edit">
+              <h1 class="profile__name overflowtext">Жак-Ив Кусто</h1>
+              <button class="profile__edit-button" type="button" aria-label="Кнопка редактирования профиля."></button>
+            </div>
+            <p class="profile__career overflowtext">Исследователь океана</p>
+          </div>
+        </div>
+        <button class="profile__add-button" type="button" aria-label="Кнопка добавления фото."></button>
+      </section>
+      <section class="cards" aria-label="секция с фотографиями посещенных мест">
+        <article class="card">
+          <img class="card__image" src=".//images/Dombaj.jpg" alt="Суровый осенний вид на горы Домбай вдоль хребта.">
+          <div class="card__group">
+            <h2 class="card__title overflowtext">Домбай</h2>
+            <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__image" src=".//images/Gora_Elbrus.jpg" alt="Увидеть на горизонте в закатном мареве силуэт горы Эльбрус.">
+          <div class="card__group">
+            <h2 class="card__title overflowtext">Гора Эльбрус</h2>
+            <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__image" src=".//images/Karachaevsk.jpg" alt="Полуразрушенная церковь, на фоне склона гор в Карачаевске.">
+          <div class="card__group">
+            <h2 class="card__title overflowtext">Карачаевск</h2>
+            <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__image" src=".//images/Teletskoye_Lake.Altai.jpg" alt="Телецкое озеро на Алтае.">
+          <div class="card__group">
+            <h2 class="card__title overflowtext">Телецкое озеро. Алтай</h2>
+            <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__image" src=".//images/Volga_River.jpg" alt="Вид на Волгу.">
+          <div class="card__group">
+            <h2 class="card__title overflowtext">Река Волга</h2>
+            <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+          </div>
+        </article>
+        <article class="card">
+          <img class="card__image" src=".//images/Elbres_vershina.jpg" alt="Заснеженная часть горы Эльбрус.">
+          <div class="card__group">
+            <h2 class="card__title overflowtext">Эльбрус</h2>
+            <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+          </div>
+        </article>
+      </section>
+    </main>
+    <footer class="footer">
+      <p class="footer__copyright">© 2023 Екатерина Долгополова</p>
+    </footer>
+    <div class="popup">
+      <div class="popup__container">
+        <button class="popup__button-close" type="button" aria-label="закрыть форму"></button>
+        <h2 class="popup__title">Редактировать профиль</h2>
+        <form class="popup__form">
+          <input class="popup__name-field"   name="name"   type="text" placeholder="Жак-Ив Кусто"         required="">
+          <input class="popup__career-field"   name="career" type="text" placeholder="Исследователь океана" required="">
+          <button class="popup__submit" type="submit" aria-label="Cохранить">Сохранить</button>
+        </form>
+      </div>
+    </div>
+    <script src="./vendor/index.js"></script>
+  </body>
+</html>
