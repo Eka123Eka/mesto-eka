@@ -10,11 +10,13 @@
   border: 2px solid rgba(255, 255, 255, 1);
   border-radius: 2px;
   box-sizing: border-box;
+  transition: opacity .5s linear;
 }
 
 .profile__add-button:hover {
-  background-image: url(../../../images/Add_button_hover.svg);
+  opacity: 0.6;
   border-color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
 }
 
 @media screen and (max-width: 730px) {
