@@ -5,9 +5,3 @@
   background: #C4C4C4;
   border-radius: 50%;
 }
-
-@media screen and (max-width: 730px) {
-  .profile__avatar {
-    margin-left: -1px;
-  }
-}

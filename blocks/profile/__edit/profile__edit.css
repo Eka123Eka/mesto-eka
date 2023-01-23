@@ -8,9 +8,8 @@
 
 @media screen and (max-width: 730px) {
   .profile__edit {
-    width: 100%;
-    justify-content: center;
-    align-items: center;
+    max-width: 282px;
+    margin-left: 46px;
     grid-template-columns: 189px 18px;
     column-gap: 10px;
   }
