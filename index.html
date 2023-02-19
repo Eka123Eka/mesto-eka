@@ -25,8 +25,9 @@
         <button class="profile__add-button" type="button" aria-label="Кнопка добавления фото."></button>
       </section>
       <section class="cards" aria-label="секция с фотографиями посещенных мест">
-        <article class="card">
+        <!--<article class="card">
           <img class="card__image" src=".//images/Dombaj.jpg" alt="Суровый осенний вид на горы Домбай вдоль хребта.">
+          <button class="card__trash-button" type="button" aria-label="Корзина"></button>
           <div class="card__group">
             <h2 class="card__title overflow-text">Домбай</h2>
             <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
@@ -66,23 +67,51 @@
             <h2 class="card__title overflow-text">Эльбрус</h2>
             <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
           </div>
-        </article>
+        </article>-->
       </section>
     </main>
     <footer class="footer">
       <p class="footer__copyright">© 2023 Екатерина Долгополова</p>
     </footer>
-    <div class="popup">
+    <div class="popup popup_type_edit-profile">
       <div class="popup__container">
         <button class="popup__button-close" type="button" aria-label="закрыть форму"></button>
         <h2 class="popup__title">Редактировать профиль</h2>
-        <form class="popup__form" name="main-form">
+        <form class="popup__form" name="main-form-edit-profile">
           <input class="popup__input-field"   name="name-input"   type="text" placeholder="Жак-Ив Кусто"         required="">
           <input class="popup__input-field"   name="career-input" type="text" placeholder="Исследователь океана" required="">
           <button class="popup__submit" type="submit" aria-label="Cохранить">Сохранить</button>
         </form>
       </div>
     </div>
+    <div class="popup popup_type_add-photo">
+      <div class="popup__container">
+        <button class="popup__button-close" type="button" aria-label="закрыть форму"></button>
+        <h2 class="popup__title">Новое место</h2>
+        <form class="popup__form" name="main-form-add-photo">
+          <input class="popup__input-field"   name="place-input"    type="text" placeholder="Назовите место"                required="">
+          <input class="popup__input-field"   name="urlImage-input" type="url"  placeholder="Вставьте ссылку на фото места" required="">
+          <button class="popup__submit" type="submit" aria-label="Сохранить карточку места">Создать</button>
+        </form>
+      </div>
+    </div>
+    <div class="popup popup_type_big-photo">
+      <figure class="popup__container popup__container_type_big-photo">
+        <button class="popup__button-close popup__button-close_type_big-photo" type="button" aria-label="Закрыть окно"></button>
+        <img  class="popup__big-size-photo" src=""  alt="">
+        <figcaption class="popup__big-size-title"></figcaption>
+      </figure>
+    </div>
+    <template class="template-card">
+      <article class="card">
+        <img class="card__image" src="" alt="">
+        <button class="card__trash-button" type="button" aria-label="Корзина"></button>
+        <div class="card__group">
+          <h2 class="card__title overflow-text"></h2>
+          <button class="card__like-button" type="button" aria-label="иконка лайк"></button>
+        </div>
+      </article>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>
