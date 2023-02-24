@@ -51,10 +51,14 @@ fillContainerCards(initialCards);
 
 function openPopup(popup) {
   popup.classList.add('popup_opened');
+  document.addEventListener('keydown', closePopupEscBtn);
+  document.addEventListener('mousedown', closePopupClickOverlay);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
+  document.removeEventListener('keydown', closePopupEscBtn);
+  document.removeEventListener('mousedown', closePopupClickOverlay);
 }
 
 function handleLikeButton(evt) {
@@ -113,6 +117,19 @@ btnCloseAdd.addEventListener('click', function() {
 btnCloseBigPhoto.addEventListener('click', function() {
   closePopup(formPopupBigPhoto);
 });
+
+function closePopupEscBtn (evt) {
+  if (evt.key === 'Escape') {
+    closePopup(document.querySelector('.popup_opened'));
+  }
+};
+
+function closePopupClickOverlay (evt) {
+  const openPopup = document.querySelector('.popup_opened');
+  if (evt.target === openPopup) {
+    closePopup(openPopup);
+  }
+}
 
 
 
