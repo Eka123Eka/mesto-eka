@@ -52,17 +52,13 @@ fillContainerCards(initialCards);
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEscBtn);
-  popup.addEventListener('mousedown', function(evt) {
-    closePopupClickOverlay(evt, popup);
-  });
+  popup.addEventListener('mousedown', closePopupClickOverlay);
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEscBtn);
-  popup.removeEventListener('mousedown', function(evt) {
-    closePopupClickOverlay(evt, popup);
-  });
+  popup.removeEventListener('mousedown', closePopupClickOverlay);
 }
 
 function handleLikeButton(evt) {
@@ -135,8 +131,8 @@ function closePopupEscBtn (evt) {
   }
 };
 
-function closePopupClickOverlay (evt, openPopup) {
+function closePopupClickOverlay (evt) {
   if (evt.target === evt.currentTarget) {
-    closePopup(openPopup);
+    closePopup(evt.currentTarget);
   }
 }
