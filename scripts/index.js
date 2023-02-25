@@ -52,13 +52,17 @@ fillContainerCards(initialCards);
 function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEscBtn);
-  document.addEventListener('mousedown', closePopupClickOverlay);
+  popup.addEventListener('mousedown', function(evt) {
+    closePopupClickOverlay(evt, popup);
+  });
 }
 
 function closePopup(popup) {
   popup.classList.remove('popup_opened');
   document.removeEventListener('keydown', closePopupEscBtn);
-  document.removeEventListener('mousedown', closePopupClickOverlay);
+  popup.removeEventListener('mousedown', function(evt) {
+    closePopupClickOverlay(evt, popup);
+  });
 }
 
 function handleLikeButton(evt) {
@@ -94,10 +98,14 @@ btnEditProfile.addEventListener('click', function() {
   fldNameEditForm.value   = fldNameProfile.textContent;
   fldCareerEditForm.value = fldCareerProfile.textContent;
   openPopup(formPopupEdit);
+  checkInputError(formPopupEdit, configOfValidation);
+  disableSubmitBtn(formPopupEdit, configOfValidation);
 });
+
 formElementEdit.addEventListener('submit', function(evt) {
   handleFormEditSubmit(evt, formPopupEdit);
 });
+
 btnCloseEdit.addEventListener('click', function() {
   closePopup(formPopupEdit);
 });
@@ -106,10 +114,13 @@ btnAddPhoto.addEventListener('click', function() {
   fldPlaceAddForm.value = "";
   fldUrlImageAddForm.value = "";
   openPopup(formPopupAddPhoto);
+  disableSubmitBtn(formPopupAddPhoto, configOfValidation);
 });
+
 formElementAdd.addEventListener('submit', function(evt) {
   handleFormAddSubmit(evt, formPopupAddPhoto);
 });
+
 btnCloseAdd.addEventListener('click', function() {
   closePopup(formPopupAddPhoto);
 });
@@ -124,12 +135,8 @@ function closePopupEscBtn (evt) {
   }
 };
 
-function closePopupClickOverlay (evt) {
-  const openPopup = document.querySelector('.popup_opened');
-  if (evt.target === openPopup) {
+function closePopupClickOverlay (evt, openPopup) {
+  if (evt.target === evt.currentTarget) {
     closePopup(openPopup);
   }
 }
-
-
-
