@@ -1,3 +1,44 @@
+import Card from './Card.js';
+import FormValidator from './FormValidator.js';
+//import {initialCards} from './cards.js';
+
+const initialCards = [
+  {
+    name: 'Архыз',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+  },
+  {
+    name: 'Челябинская область',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+  },
+  {
+    name: 'Иваново',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+  },
+  {
+    name: 'Камчатка',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+  },
+  {
+    name: 'Холмогорский район',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+  },
+  {
+    name: 'Байкал',
+    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+  }
+];
+
+const configOfValidation = {
+  formSelector: '.popup__form',
+  inputSelector: '.popup__input-field',
+  inputSet: '.popup__set',
+  submitButtonSelector: '.popup__submit',
+  inactiveButtonClass: 'popup__submit_disabled',
+  inputErrorClass: 'popup__input-field_type_error',
+  errorClass: '.popup__input-error'
+};
+
 const fldNameProfile    = document.querySelector('.profile__name');
 const fldCareerProfile  = document.querySelector('.profile__career');
 const btnEditProfile    = document.querySelector('.profile__edit-button');
@@ -15,41 +56,33 @@ const fldPlaceAddForm    = formElementAdd.querySelector('[name="place-input"]');
 const fldUrlImageAddForm = formElementAdd.querySelector('[name="urlImage-input"]');
 
 const formPopupBigPhoto  = document.querySelector('.popup_type_big-photo');
-const btnCloseBigPhoto   = formPopupBigPhoto.querySelector('.popup__button-close_type_big-photo');
-const imgBigPhoto        = formPopupBigPhoto.querySelector('.popup__big-size-photo');
-const txtTitleBigPhoto   = formPopupBigPhoto.querySelector('.popup__big-size-title');
+const btnCloseBigPhoto     = formPopupBigPhoto.querySelector('.popup__button-close_type_big-photo');
+const selectors = {
+  template: '.template-card',
+  formPopupBigPhoto: '.popup_type_big-photo',
+  imgBigPhoto: '.popup__big-size-photo',
+  txtTitleBigPhoto: '.popup__big-size-title',
+}
 
 const containerCards     = document.querySelector('.cards');
-const templateCard       = document.querySelector('.template-card').content.querySelector('.card');
 
 function fillContainerCards(initialCards) {
-  const cards = initialCards.map(function(card) {
-    return createCard(card.name, card.link);
+  const cards = initialCards.map((item) => {
+    return createCard(item);
   });
   containerCards.append(...cards);
 };
 
-function createCard(name, link) {
-  const cardNewItem  = templateCard.cloneNode(true);
-  const imgCardItem = cardNewItem.querySelector('.card__image');
-  imgCardItem.alt = name;
-  imgCardItem.src = link;
-  imgCardItem.addEventListener('click', handleResizePhoto);
+function createCard(itemCard) {
 
-  cardNewItem.querySelector('.card__title').textContent = name;
+  return new Card ( itemCard,
+                    selectors, {Popup: formPopupBigPhoto,
+                    openPopup: (namePopup) => openPopup(namePopup),
+                  }).makeCard();
 
-  const btnLike = cardNewItem.querySelector('.card__like-button');
-  btnLike.addEventListener('click', handleLikeButton);
-
-  const btnRemoveCard = cardNewItem.querySelector('.card__trash-button');
-  btnRemoveCard.addEventListener('click', handleRemoveCard);
-
-  return cardNewItem;
 };
 
-fillContainerCards(initialCards);
-
-function openPopup(popup) {
+export function openPopup(popup) {
   popup.classList.add('popup_opened');
   document.addEventListener('keydown', closePopupEscBtn);
   popup.addEventListener('mousedown', closePopupClickOverlay);
@@ -61,15 +94,37 @@ function closePopup(popup) {
   popup.removeEventListener('mousedown', closePopupClickOverlay);
 }
 
-function handleLikeButton(evt) {
-  evt.target.classList.toggle('card__like-button_active');
-};
+fillContainerCards(initialCards);
 
-function handleRemoveCard(evt) {
-  const currentCard = evt.target.closest('.card');
-  currentCard.remove();
-};
+const addValidForm = new FormValidator(configOfValidation, formPopupAddPhoto);
+addValidForm.enableValidation();
+const editValidForm = new FormValidator(configOfValidation, formPopupEdit);
+editValidForm.enableValidation();
 
+//listeners
+btnEditProfile.addEventListener('click', function() {
+  fldNameEditForm.value   = fldNameProfile.textContent;
+  fldCareerEditForm.value = fldCareerProfile.textContent;
+  editValidForm.resetValidation();
+  openPopup(formPopupEdit);
+});
+
+btnAddPhoto.addEventListener('click', function() {
+  fldPlaceAddForm.value = "";
+  fldUrlImageAddForm.value = "";
+  addValidForm.resetValidation();
+  openPopup(formPopupAddPhoto);
+});
+
+formElementAdd.addEventListener('submit', function(evt) {
+  handleFormAddSubmit(evt, formPopupAddPhoto);
+});
+
+formElementEdit.addEventListener('submit', function(evt) {
+  handleFormEditSubmit(evt, formPopupEdit);
+});
+
+//submit
 function handleFormEditSubmit(evt, popup) {
   evt.preventDefault();
   fldNameProfile.textContent = fldNameEditForm.value;
@@ -79,42 +134,13 @@ function handleFormEditSubmit(evt, popup) {
 
 function handleFormAddSubmit(evt, popup) {
   evt.preventDefault();
-  containerCards.prepend(createCard(fldPlaceAddForm.value, fldUrlImageAddForm.value));
+  containerCards.prepend(createCard({name:fldPlaceAddForm.value, link:fldUrlImageAddForm.value}));
   closePopup(popup);
 }
 
-function handleResizePhoto(evt) {
-  imgBigPhoto.src = evt.target.src;
-  imgBigPhoto.alt = evt.target.alt;
-  txtTitleBigPhoto.textContent = evt.target.alt;
-  openPopup(formPopupBigPhoto);
-};
-
-btnEditProfile.addEventListener('click', function() {
-  fldNameEditForm.value   = fldNameProfile.textContent;
-  fldCareerEditForm.value = fldCareerProfile.textContent;
-  openPopup(formPopupEdit);
-  checkInputError(formPopupEdit, configOfValidation);
-  disableSubmitBtn(formPopupEdit, configOfValidation);
-});
-
-formElementEdit.addEventListener('submit', function(evt) {
-  handleFormEditSubmit(evt, formPopupEdit);
-});
-
+//close
 btnCloseEdit.addEventListener('click', function() {
   closePopup(formPopupEdit);
-});
-
-btnAddPhoto.addEventListener('click', function() {
-  fldPlaceAddForm.value = "";
-  fldUrlImageAddForm.value = "";
-  openPopup(formPopupAddPhoto);
-  disableSubmitBtn(formPopupAddPhoto, configOfValidation);
-});
-
-formElementAdd.addEventListener('submit', function(evt) {
-  handleFormAddSubmit(evt, formPopupAddPhoto);
 });
 
 btnCloseAdd.addEventListener('click', function() {
