@@ -1,6 +1,0 @@
-.card__group {
-  margin: 25px 15px 25px 21px;
-  display: grid;
-  grid-template-columns: auto auto;
-  justify-content: space-between;
-}
