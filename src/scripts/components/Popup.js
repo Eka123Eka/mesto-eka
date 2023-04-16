@@ -1,22 +1,21 @@
 export default class Popup {
   constructor(selector) {
-    this._popup = document.querySelector(selector);
-    this._closeButton = this._popup.querySelector('.popup__button-close');
+    this.popup = document.querySelector(selector);
+    this._closeButton = this.popup.querySelector('.popup__button-close');
     this._handlePopupEscBtn = this._handlePopupEscBtn.bind(this);
   }
 
   open() {
-    this._popup.classList.add('popup_opened');
+    this.popup.classList.add('popup_opened');
     document.addEventListener('keydown', this._handlePopupEscBtn);
   }
-
   close() {
-    this._popup.classList.remove('popup_opened');
+    this.popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', this._handlePopupEscBtn);
   }
 
   setEventListeners() {
-    this._popup.addEventListener('mousedown', this._handlePopupClickOverlay.bind(this));
+    this.popup.addEventListener('mousedown', this._handlePopupClickOverlay.bind(this));
     this._closeButton.addEventListener('click', () => this.close());
   }
 
@@ -32,15 +31,5 @@ export default class Popup {
     }
   }
 
-  _changeSubmitText() {
-    if (this._btnSubmit.textContent === "Сохранить"
-      || this._btnSubmit.textContent === "Создать"
-      || this._btnSubmit.textContent === "Да") {
-      this._btnSubmit.textContent = "Сохранение..."
-    } else {
-      if (this._btnSubmitText !== '') {
-        this._btnSubmit.textContent = this._btnSubmitText;
-      }
-    }
-  }
+
 }

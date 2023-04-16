@@ -11,7 +11,6 @@ export default class Section {
   };
 
   addItem(element, append = false) {
-    console.log(append);
     append ? this._container.append(element)
            : this._container.prepend(element)
   };

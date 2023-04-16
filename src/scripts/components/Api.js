@@ -3,61 +3,54 @@ class Api {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
-  getUserInfo() {
+  getUserInfoServer() {
     return fetch(`${this._baseUrl}/users/me`, { headers: this._headers })
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`getUserInfo - ${err}`));
+      .then(res => this._checkResponse(res, `getUserInfo - `))
   }
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, { headers: this._headers })
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`getInitialCards - ${err}`));
+      .then(res => this._checkResponse(res, `getInitialCards - `))
   }
-  sendUserInfo( { name, career } ) {
+  sendUserInfo( dataUser ) {
     return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       method: 'PATCH',
-      body: JSON.stringify({ name: name, about: career })})
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`PATCH ${name}, ${career} - ${err}`));
+      body: JSON.stringify(dataUser)})
+      .then(res => this._checkResponse(res, `PATCH ${dataUser.name}, ${dataUser.about} - `))
   }
-  addNewCard( { name, link } ) {
+  addNewCardServer( dataCard ) {
     return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
       method: 'POST',
-      body: JSON.stringify({ name: name, link: link})})
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`POST ${link} - ${err}`));
+      body: JSON.stringify(dataCard)})
+      .then(res => this._checkResponse(res, `POST ${dataCard.link} - `))
   }
-  deleteCard(idCard) {
+  deleteCardServer(idCard) {
     return fetch(`${this._baseUrl}/cards/${idCard}`, {
       headers: this._headers,
       method: 'DELETE',
     })
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`DELETE ${idCard} - ${err}`));
+      .then(res => this._checkResponse(res, `DELETE ${idCard} - `))
   }
-  toogleLike(idCard, isLike) {
+  toogleLikeServer(idCard, isLike) {
     return fetch(`${this._baseUrl}/cards/${idCard}/likes`, {
       headers: this._headers,
       method: isLike ? 'DELETE' : 'PUT'
     })
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`TOGGLE like ${idCard} isLike = ${isLike} - ${err}`));
+      .then(res => this._checkResponse(res, `TOGGLE like ${idCard} isLike = ${isLike} - `))
   }
-  sendAvatar({ urlAvatar }) {
+  sendAvatar(urlAvatar) {
     return fetch(`${this._baseUrl}/users/me/avatar`, {
       headers: this._headers,
       method: 'PATCH',
       body: JSON.stringify({ avatar: urlAvatar })})
-      .then(res => this._checkResponse(res))
-      .catch(err => console.log(`PATCH Avatar ${urlAvatar} - ${err}`));
+      .then(res => this._checkResponse(res, `PATCH Avatar ${urlAvatar} - `))
   }
-  _checkResponse(res) {
+  _checkResponse(res, sourceError) {
     if (res.ok) {
       return res.json()
     } else {
-      return Promise.reject(`Ошибка: ${res.status} - ${res.statusText}`)
+      return Promise.reject(`${sourceError}${res.status}(${res.statusText})`)
     }
   }
 }

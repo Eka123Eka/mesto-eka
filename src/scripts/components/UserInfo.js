@@ -2,9 +2,9 @@ export default class UserInfo {
   constructor(selectors) {
     this.name = document.querySelector(selectors.name);
     this.career = document.querySelector(selectors.career);
-    this.avatar = document.querySelector(selectors.avatar)
+    this.avatar = document.querySelector(selectors.avatar);
+    this._idUser = null;
   }
-
   getUserInfo () {
     return {
       name: this.name.textContent,
@@ -12,7 +12,6 @@ export default class UserInfo {
       avatar: this.avatar.src
     }
   }
-
   setUserInfo ({ name, about, avatar, _id }) {
     this.name.textContent = name;
     this.career.textContent = about;
@@ -20,7 +19,5 @@ export default class UserInfo {
     this._idUser = _id;
   }
 
-  getUserId() {
-    return this._idUser;
-  }
+  getUserId() {return this._idUser}
 }
